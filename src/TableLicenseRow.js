@@ -1,5 +1,6 @@
 import EditButton from "./EditButton";
-const TableRow = ({ row }) => {
+
+const TableRow = ({ row, onEdit }) => {
     return (
         <tr>
             <td>{row[0]}</td> {/**ID */}
@@ -10,7 +11,7 @@ const TableRow = ({ row }) => {
             <td>{row[4]}</td> {/**PO (new) */}
             <td>{row[5]}</td> {/**PO (old) */}
             <td>{row[6]}</td> {/**Subscription Pack */}
-            <EditButton />
+            <EditButton onClick={() => onEdit(row)} />
         </tr>
     );
 }
