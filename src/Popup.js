@@ -1,24 +1,32 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Popup.css';
 
 const Popup = ({ row, onClose }) => {
     if (!row) return null;
 
+    // Wir speichern die Originalwerte in einem separaten State
+    const [originalRow] = useState([...row]);
+
     const handleInputChange = (e, index) => {
         console.log(`Value at index ${index} changed to ${e.target.value}`);
-
         row[index] = e.target.value;
     };
 
-    const resetChanges = () =>{
+    // Asynchrone Funktion, die die geänderten Werte zurücksetzt
+    const resetChanges = () => {
+        return new Promise((resolve) => {
+            // Geänderte Werte auf die Originalwerte zurücksetzen
+            for (let i = 0; i < row.length; i++) {
+                row[i] = originalRow[i];
+            }
+            console.log('Changes reset');
+            resolve();  // Promise wird erfüllt, wenn reset abgeschlossen ist
+        });
+    };
 
-    }
-
-    const handleClick = () => {
-
-        resetChanges();
-        onClose();
-        
+    const handleClick = async () => {
+        await resetChanges();  // Warten bis die Änderungen zurückgesetzt sind
+        onClose();  // Schließen der Popup
     };
 
     return (
@@ -51,8 +59,8 @@ const Popup = ({ row, onClose }) => {
                 <input defaultValue={row[6]} onChange={(e) => handleInputChange(e, 6)} />
             </div>
             <div id='PopupButtons'>
-            <p id='UpdateButton'>Update</p>
-            <p className="DeleteButton">Delete</p>
+                <p id='UpdateButton'>Update</p>
+                <p className="DeleteButton">Delete</p>
             </div>
         </div>
     );
