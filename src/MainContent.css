@@ -1,0 +1,29 @@
+.MainContent {
+    height: 100px;
+}
+
+
+
+.LizenzenStat {
+    Margin: 10px;
+    border: solid;
+    float: right;
+    
+}
+
+.Headline {
+
+    /* width: 123px;
+    margin-left: calc(50%-123px); */
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/*
+.SwitchTable {
+    float: right;
+}
+    */
+
