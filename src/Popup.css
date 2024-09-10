@@ -22,3 +22,84 @@ svg{
 svg:hover{
     color: red;
 }
+
+h2{
+    margin-top: 0;
+    margin-left: 2.5%;
+}
+
+#divLicenseDetails{
+   display: flex;
+   justify-content: space-between;
+   height: 10%;
+   /* background-color: aqua; */
+
+   width: 80%;
+   margin-left: 1.8%;
+
+   
+}
+
+#divLicenseDetails input
+{
+    border: solid 1px black;
+    border-radius: 15px;
+}
+
+
+#divLicenseDetailsTitle{
+    display: flex;
+    justify-content: space-between;
+    height: 10%;
+    /* background-color: blueviolet;  */
+    align-items: center;
+    width: 80%;
+    margin-left: 1.8%;
+    
+}
+
+
+#PopupMainDiv p {
+    width: 24%;
+    height: 50%;
+
+    margin: 0 auto;
+    /* background-color: aliceblue; */
+    text-align: center; /* Zentriert den Text innerhalb des <p>-Elements */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+#PopupMainDiv input {
+    width: 24%;
+    height: 50%;
+
+    margin: 0 auto;
+    /* background-color: aliceblue; */
+    text-align: center; /* Zentriert den Text innerhalb des <p>-Elements */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#PopupButtons{
+    background-color: aqua;
+
+    width: 20%;
+}
+
+#PopupButtons p{
+    border: black solid 1px;
+    border-radius: 15px;
+    font-weight: 550;
+    padding: 3px;
+    cursor: pointer;
+    background-color: red;
+}
+
+#PopupButtons p:active{
+    transform: scale(0.8);
+    transition-duration: 80ms  
+}

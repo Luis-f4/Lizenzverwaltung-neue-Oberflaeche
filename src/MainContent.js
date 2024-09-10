@@ -1,8 +1,9 @@
 import './MainContent.css'
+import TableLicense from './TableLicense'
 
 export default function MainContent() {
     return (
-
+<>
 <body className='MainContent'>
 
 
@@ -19,6 +20,8 @@ Lizenzen insgesamt:
 
 <button className='SwitchTable'>Alle Lizenzen anzeigen</button>
 </body> 
+<TableLicense />
+</>
     )
 }
 

@@ -8,10 +8,12 @@ import MainContent from './MainContent';
 function App() {
   return (
     <div className="App">
-      <Navbar />
-      <MainContent />
-      <TableLicense />
-      <Popup />
+
+
+          <Navbar />
+          <MainContent />
+          <Popup />
+          
     </div>
   );
 }

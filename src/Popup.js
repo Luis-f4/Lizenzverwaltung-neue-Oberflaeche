@@ -4,6 +4,12 @@ import './Popup.css';
 const Popup = ({ row, onClose }) => {
     if (!row) return null;
 
+    const handleInputChange = (e, index) => {
+        console.log(`Value at index ${index} changed to ${e.target.value}`);
+
+        row[index] = e.target.value;
+    };
+
     return (
         <div id="PopupMainDiv">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-x-circle" viewBox="0 0 16 16" onClick={onClose}>
@@ -11,15 +17,31 @@ const Popup = ({ row, onClose }) => {
                 <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
             </svg>
             <h2>Edit License</h2>
-            <div>
-                <p><strong>ID:</strong> {row[0]}</p>
-                <p><strong>Amount:</strong> {row[1]}</p>
-                <p><strong>Available:</strong> {row[2]}</p>
-                <p><strong>Start Date:</strong> {row[7]}</p>
-                <p><strong>Expiration Date:</strong> {row[3]}</p>
-                <p><strong>PO (new):</strong> {row[4]}</p>
-                <p><strong>PO (old):</strong> {row[5]}</p>
-                <p><strong>Subscription Pack:</strong> {row[6]}</p>
+
+            <div id='divLicenseDetailsTitle'>
+                <p><strong>ID</strong></p>
+                <p><strong>Amount</strong></p>
+                <p><strong>Available</strong></p>
+                <p><strong>Start Date</strong></p>
+                <p><strong>Expiration Date</strong></p>
+                <p><strong>PO (new)</strong></p>
+                <p><strong>PO (old)</strong></p>
+                <p><strong>Subscription Pack</strong></p>
+            </div>
+
+            <div id='divLicenseDetails'>
+                <input value={row[0]} onChange={(e) => handleInputChange(e, 0)} />
+                <input defaultValue={row[1]} onChange={(e) => handleInputChange(e, 1)} />
+                <input value={row[2]} onChange={(e) => handleInputChange(e, 2)} />
+                <input defaultValue={row[7]} onChange={(e) => handleInputChange(e, 7)} />
+                <input defaultValue={row[3]} onChange={(e) => handleInputChange(e, 3)} />
+                <input defaultValue={row[4]} onChange={(e) => handleInputChange(e, 4)} />
+                <input value={row[5]} onChange={(e) => handleInputChange(e, 5)} />
+                <input defaultValue={row[6]} onChange={(e) => handleInputChange(e, 6)} />
+            </div>
+            <div id='PopupButtons'>
+            <p id='UpdateButton'>Update</p>
+            <p className="DeleteButton">Delete</p>
             </div>
         </div>
     );
