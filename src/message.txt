@@ -1,3 +1,6 @@
+Ich will das die onclose funktion erst ausgeführt wird wenn die resetChanges fertig ist. ausserdem will ich dass die resetChanges alle geänderten werde vom input zurücksetzt:
+
+
 import React from 'react';
 import './Popup.css';
 
