@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import './Popup.css';
 
 const Popup = ({ row, onClose }) => {
-    if (!row) return null;
+    // Initialisiere den Hook mit einem leeren Array als Fallback, falls row null ist
+    const [originalRow] = useState(row ? [...row] : []);
 
-    // Wir speichern die Originalwerte in einem separaten State
-    const [originalRow] = useState([...row]);
+    // Früher return nach dem Hook-Aufruf
+    if (!row) return null;
 
     const handleInputChange = (e, index) => {
         console.log(`Value at index ${index} changed to ${e.target.value}`);
