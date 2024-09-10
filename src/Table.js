@@ -1,19 +1,17 @@
 import TableLicense from "./TableLicense";
-const Table = () => {
+const Table = ({mode}) => {
 
-    /*
-    if(tablemode === "license"){
+    
+    if(mode === 'License'){
         return(
             <TableLicense />
         );
     }else{
         return(
-            andere Tabelle
+            <p>Andere tabelle</p>
         )
-    } */
-    return (
-        <p></p>
-     );
+    } 
+
 }
  
 export default Table;

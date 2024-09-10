@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import './Popup.css';
 
 const Popup = ({ row, onClose }) => {
-    // Initialisiere den Hook mit einem leeren Array als Fallback, falls row null ist
+
     const [originalRow] = useState(row ? [...row] : []);
 
-    // Früher return nach dem Hook-Aufruf
+
     if (!row) return null;
 
     const handleInputChange = (e, index) => {
@@ -13,21 +13,21 @@ const Popup = ({ row, onClose }) => {
         row[index] = e.target.value;
     };
 
-    // Asynchrone Funktion, die die geänderten Werte zurücksetzt
+
     const resetChanges = () => {
         return new Promise((resolve) => {
-            // Geänderte Werte auf die Originalwerte zurücksetzen
+ 
             for (let i = 0; i < row.length; i++) {
                 row[i] = originalRow[i];
             }
             console.log('Changes reset');
-            resolve();  // Promise wird erfüllt, wenn reset abgeschlossen ist
+            resolve();  
         });
     };
 
     const handleClick = async () => {
-        await resetChanges();  // Warten bis die Änderungen zurückgesetzt sind
-        onClose();  // Schließen der Popup
+        await resetChanges();  
+        onClose();  
     };
 
     return (
