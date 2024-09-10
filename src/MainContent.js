@@ -14,11 +14,20 @@ Freie Lizenzen:
 Vergebene Lizenzen: 
 <br/>
 Lizenzen insgesamt: 
+
+
 </div>
 
-<h1 className='Headline'>Lizenzen</h1>
+<h1 className='Headline'>Licenses</h1>
 
-<button className='SwitchTable'>Alle Lizenzen anzeigen</button>
+<button className='SwitchTable'>Show all Licenses</button>
+
+<input className='Searchbar'></input>
+<button className='Search'>Search</button>
+
+<div>
+<button className='CreateButton'>Add New License</button>
+</div>
 </body> 
 <TableLicense />
 </>
