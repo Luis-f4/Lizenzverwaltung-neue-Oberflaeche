@@ -33,21 +33,29 @@ export default function MainContent() {
 
 
 <div className="LizenzenStat">
-Freie Lizenzen: 
+Available licenses:
 <br/>
-Vergebene Lizenzen: 
+Allocated licenses:
 <br/>
-Lizenzen insgesamt: 
+Total licenses:
 
 
 </div>
 
 <h1 className='Headline'>{title}</h1>
 
+<br/>
+<br/>
+<br/>
+<br/>
+
 <button className='SwitchTable' onClick={changeMode}>{modeButton}</button>
 
-<input className='Searchbar'></input>
-<button className='Search'>Search</button>
+<input type='text' className='Searchbar' placeholder="Einträge durchsuchen" /> {/* onChange={handleChange}
+     onKeyDown={handleSearchEnter} */}
+
+
+<button type="button" className='Search' >Search</button> {/* onClick={handleSearch} */}
 
 <div>
 <button className='CreateButton'>Add New License</button>
