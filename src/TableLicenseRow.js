@@ -1,16 +1,20 @@
 import EditButton from "./EditButton";
 
-const TableRow = ({ row, onEdit }) => {
+const TableRow = ({ row, onEdit, mode }) => {
+    const commonCells = [
+        <td key={0}>{row[0]}</td>,
+        <td key={1}>{row[1]}</td>,
+        <td key={2}>{row[2]}</td>,
+        mode === 'License' && <td key={7}>{row[7]}</td>,
+        <td key={3}>{row[3]}</td>,
+        <td key={4}>{row[4]}</td>,
+        <td key={5}>{row[5]}</td>,
+        <td key={6}>{row[6]}</td>
+    ].filter(Boolean); // filter(Boolean) entfernt null-Werte
+
     return (
         <tr>
-            <td>{row[0]}</td> {/**ID */}
-            <td>{row[1]}</td> {/**Amount */}
-            <td>{row[2]}</td> {/**Available */}
-            <td>{row[7]}</td> {/**Start Date */}
-            <td>{row[3]}</td> {/**Expiration Date */}
-            <td>{row[4]}</td> {/**PO (new) */}
-            <td>{row[5]}</td> {/**PO (old) */}
-            <td>{row[6]}</td> {/**Subscription Pack */}
+            {commonCells}
             <EditButton onClick={() => onEdit(row)} />
         </tr>
     );

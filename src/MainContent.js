@@ -6,16 +6,22 @@ export default function MainContent() {
 
     const [mode, setMode] = useState('License');
     const [modeButton, setModeButton] = useState('Show Employee');
+    const [title, setTitle] = useState('Licenses');
 
-
+    
     const changeMode = () => {
 
         if(mode === 'License'){
             setMode('Employee');
-            setModeButton('Show Licenses');
+            setModeButton('Show Licenses'); 
+            setTitle('Licensing');
+            
         }else{
             setMode('License');
+            
             setModeButton('Show Employee');
+            setTitle('Licenses');
+            
         }
 
 }
@@ -36,7 +42,7 @@ Lizenzen insgesamt:
 
 </div>
 
-<h1 className='Headline'>Licenses</h1>
+<h1 className='Headline'>{title}</h1>
 
 <button className='SwitchTable' onClick={changeMode}>{modeButton}</button>
 

@@ -3,12 +3,13 @@ import TableLicenseRow from './TableLicenseRow';
 import { useEffect, useState } from 'react';
 import Popup from './Popup';
 
-const TableLicense = () => {
+const TableEmployee = () => {
+
     const [data, setData] = useState([]);
     const [selectedRow, setSelectedRow] = useState(null); // Zustand für die ausgewählte Zeile
 
     useEffect(() => {
-        fetch('http://localhost:8080/getAllLicenses', {
+        fetch('http://localhost:8080/all', {
             method: 'GET',
             headers: {
                 'Authorization': 'Basic ' + btoa('Bart:123')
@@ -31,28 +32,29 @@ const TableLicense = () => {
         <>
             <table>
                 <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Amount</th>
-                        <th>Available</th>
-                        <th>Start Date</th>
+                    <tr> 
+                        <th>E-Mail</th>
+                        <th>Abteilung</th>
+                        <th>Unternehmen</th>
+                        <th>Subscription Pack</th>
                         <th>Expiration Date</th>
                         <th>PO (new)</th>
                         <th>PO (old)</th>
-                        <th>Subscription Pack</th>
+                        
                     </tr>
                 </thead>
 
                 <tbody>
                     {data.map((row, index) => (
-                        <TableLicenseRow key={index} row={row} onEdit={handleEditClick} mode={'License'} />
+                        <TableLicenseRow key={index} row={row} onEdit={handleEditClick} />
                     ))}
                 </tbody>
             </table>
 
-            {selectedRow && <Popup row={selectedRow} onClose={closePopup} mode={"License"} />}
+            {selectedRow && <Popup row={selectedRow} onClose={closePopup} mode={"Employee"} />}
         </>
     );
+    
 }
-
-export default TableLicense;
+ 
+export default TableEmployee;

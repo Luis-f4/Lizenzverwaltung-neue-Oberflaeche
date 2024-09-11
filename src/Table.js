@@ -1,4 +1,5 @@
 import TableLicense from "./TableLicense";
+import TableEmployee from "./TableEmployee";
 const Table = ({mode}) => {
 
     
@@ -8,7 +9,7 @@ const Table = ({mode}) => {
         );
     }else{
         return(
-            <p>Andere tabelle</p>
+            <TableEmployee />
         )
     } 
 
