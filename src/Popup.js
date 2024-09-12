@@ -3,14 +3,17 @@ import './Popup.css';
 
 const Popup = ({ row, onClose, mode }) => {
     const [originalRow] = useState(row ? [...row] : []);
+    const [currentRow, setCurrentRow] = useState(row ? [...row] : []);
     if (!row) return null;
 
     const handleInputChange = (e, index) => {
-        row[index] = e.target.value;
+        const newRow = [...currentRow];
+        newRow[index] = e.target.value;
+        setCurrentRow(newRow);
     };
 
     const resetChanges = () => new Promise(resolve => {
-        row.forEach((_, i) => (row[i] = originalRow[i]));
+        setCurrentRow([...originalRow]);
         resolve();
     });
 
@@ -19,30 +22,74 @@ const Popup = ({ row, onClose, mode }) => {
         onClose();
     };
 
-    const renderInputs = () => {
-        if (mode === 'License') {
-            return (
-                <>
-                    <input value={row[0]} onChange={(e) => handleInputChange(e, 0)} />
-                    <input value={row[1]} onChange={(e) => handleInputChange(e, 1)} />
-                    <input value={row[2]} onChange={(e) => handleInputChange(e, 2)} />
-                    <input value={row[7]} onChange={(e) => handleInputChange(e, 7)} />
-                    <input value={row[3]} onChange={(e) => handleInputChange(e, 3)} />
-                    <input value={row[4]} onChange={(e) => handleInputChange(e, 4)} />
-                    <input value={row[5]} onChange={(e) => handleInputChange(e, 5)} />
-                    <input value={row[6]} onChange={(e) => handleInputChange(e, 6)} />
-                </>
-            );
+    const handleUpdate = async () => {
+        if (mode === 'License') { 
+            
+            
+        await fetch(`http://localhost:8080/updateLicense/${currentRow[0]}/${currentRow[1]}/${currentRow[7]}/${currentRow[3]}/${currentRow[4]}/${currentRow[5]}/${currentRow[6]}`, {
+            method: "PUT",
+            headers: {
+                'Authorization': 'Basic ' + btoa('Bart:123')
+            }
+        });
+        
+
+
+        } else {
+            
+            await fetch(`http://localhost:8080/update/${currentRow[0]}/${currentRow[1]}/${currentRow[2]}`, {
+                method: "PUT",
+                headers: {
+                    'Authorization': 'Basic ' + btoa('Bart:123')
+                }
+            });
+            
         }
+
+        onClose();
+        window.location.reload();
+    };
+
+    const handleDelete = async () => {
+
+        if(mode === 'License'){ 
+
+            console.log('License löschung beginnt');
+
+        await fetch(`http://localhost:8080/deleteLicense/${currentRow[0]}`, {
+            method: "DELETE",
+            headers: {
+                'Authorization': 'Basic ' + btoa('Bart:123')
+            }
+        });
+        
+
+        }else{
+
+            await fetch(`http://localhost:8080/delete/${currentRow[0]}`, {
+                method: "DELETE",
+                headers: {
+                    'Authorization': 'Basic ' + btoa('Bart:123')
+                }
+            });
+            
+        }
+
+        onClose();
+        window.location.reload();
+    }
+
+    const renderInputs = () => {
         return (
             <>
-                <input value={row[0]} onChange={(e) => handleInputChange(e, 0)} />
-                <input value={row[1]} onChange={(e) => handleInputChange(e, 1)} />
-                <input value={row[2]} onChange={(e) => handleInputChange(e, 2)} />
-                <input value={row[3]} onChange={(e) => handleInputChange(e, 3)} />
-                <input value={row[4]} onChange={(e) => handleInputChange(e, 4)} />
-                <input value={row[5]} onChange={(e) => handleInputChange(e, 5)} />
-                <input value={row[6]} onChange={(e) => handleInputChange(e, 6)} />
+                <input className='testInput' value={currentRow[0]} onChange={(e) => handleInputChange(e, 0)} />
+                <input value={currentRow[1]} onChange={(e) => handleInputChange(e, 1)} />
+                <input value={currentRow[2]} onChange={(e) => handleInputChange(e, 2)} />
+                {mode === 'License' && <input value={currentRow[7]} onChange={(e) => handleInputChange(e, 7)} />}
+                <input value={currentRow[3]} onChange={(e) => handleInputChange(e, 3)} />
+                <input value={currentRow[4]} onChange={(e) => handleInputChange(e, 4)} />
+                <input value={currentRow[5]} onChange={(e) => handleInputChange(e, 5)} />
+                <input value={currentRow[6]} onChange={(e) => handleInputChange(e, 6)} />
             </>
         );
     };
@@ -69,8 +116,8 @@ const Popup = ({ row, onClose, mode }) => {
                 ) : (
                     <>
                         <p><strong>E-Mail</strong></p>
-                        <p><strong>Abteilung</strong></p>
-                        <p><strong>Unternehmen</strong></p>
+                        <p><strong>Department</strong></p>
+                        <p><strong>Company</strong></p>
                         <p><strong>Subscription Pack</strong></p>
                         <p><strong>Expiration Date</strong></p>
                         <p><strong>PO (new)</strong></p>
@@ -81,9 +128,9 @@ const Popup = ({ row, onClose, mode }) => {
             <div id='divLicenseDetails'>
                 {renderInputs()}
             </div>
-            <div id='PopupButtons'>
-                <p id='UpdateButton'>Update</p>
-                <p className="DeleteButton">Delete</p>
+            <div id='PopupButtons' >
+                <p id='UpdateButton' onClick={handleUpdate}>Update</p>
+                <p className="DeleteButton" onClick={handleDelete}>Delete</p>
             </div>
         </div>
     );

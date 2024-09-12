@@ -34,8 +34,8 @@ const TableEmployee = () => {
                 <thead>
                     <tr> 
                         <th>E-Mail</th>
-                        <th>Abteilung</th>
-                        <th>Unternehmen</th>
+                        <th>Department</th>
+                        <th>Company</th>
                         <th>Subscription Pack</th>
                         <th>Expiration Date</th>
                         <th>PO (new)</th>
