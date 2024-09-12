@@ -1,26 +1,44 @@
-ist die abfrage und die antwort funktion korrekt?:
+@CrossOrigin(origins = "http://localhost:3000")
+@PutMapping(path = "/updateLicense/{ID}/{amount}/{startDate}/{expirationDate}/{purchaseOrder}/{purchaseOrderOriginally}/{subscriptionPack}")
+public @ResponseBody ResponseEntity<String> updateLicenseEntity(
+    @PathVariable int ID,
+    @PathVariable String amount,
+    @PathVariable String startDate,
+    @PathVariable String expirationDate,
+    @PathVariable String purchaseOrder,
+    @PathVariable String purchaseOrderOriginally,
+    @PathVariable String subscriptionPack) {
 
-        await fetch(`http://localhost:8080/updateLicense/${currentRow[0]}/${currentRow[1]}/${currentRow[7]}/${currentRow[3]}/${currentRow[4]}/${currentRow[5]}/${currentRow[6]}`, {
-            method: "PUT",
-            headers: {
-                'Authorization': 'Basic ' + btoa('Bart:123')
-            }
-        });
+    try {
+        // 1. Lizenz suchen
+        Optional<LicenseEntity> licenseOptional = licenseRepo.findById(ID);
 
+        if (!licenseOptional.isPresent()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("License with ID " + ID + " not found.");
+        }
 
+        LicenseEntity license = licenseOptional.get();
 
-    @CrossOrigin(origins = "http://localhost:3000")
-    @PutMapping(path = "/updateLicense/{ID}/{amount}/{startDate}/{expirationDate}/{purchaseOrder}/{purchaseOrderOriginally}/{subscriptionPack}")
-    public @ResponseBody String updateLicenseEntity(@PathVariable int ID, @PathVariable String amount, @PathVariable String startDate
-            , @PathVariable String expirationDate, @PathVariable String purchaseOrder, @PathVariable String purchaseOrderOld, @PathVariable String subscriptionPack) {
-        LicenseEntity l = licenseRepo.findById(ID).get();
-        l.setAmount(Integer.parseInt(amount));
-        l.setStartDate(Date.valueOf(startDate));
-        l.setExpirationDate(Date.valueOf(expirationDate));
-        l.setPurchaseOrder(Integer.parseInt(purchaseOrder));
-        l.setPurchaseOrderOriginally(Integer.parseInt(purchaseOrderOld));
-        l.setSubscriptionPack(subscriptionPack);
+        // 2. Eingabewerte validieren und parsen
+        try {
+            license.setAmount(Integer.parseInt(amount));
+            license.setStartDate(Date.valueOf(startDate));
+            license.setExpirationDate(Date.valueOf(expirationDate));
+            license.setPurchaseOrder(Integer.parseInt(purchaseOrder));
+            license.setPurchaseOrderOriginally(Integer.parseInt(purchaseOrderOriginally));
+            license.setSubscriptionPack(subscriptionPack);
+        } catch (NumberFormatException | IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid input format: " + e.getMessage());
+        }
 
-        licenseRepo.save(l);
-        return "Updated!";
+        // 3. Lizenz speichern
+        licenseRepo.save(license);
+
+        // 4. Erfolgsnachricht
+        return ResponseEntity.ok("License updated successfully!");
+
+    } catch (Exception e) {
+        // Fehlerprotokollierung und Fehlerantwort
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating license: " + e.getMessage());
     }
+}
