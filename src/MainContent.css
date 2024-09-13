@@ -70,6 +70,7 @@ input:focus{
     width: 98%;
     height: 30px;
     border-radius: 5px;
+    cursor: pointer;
 
 }
 

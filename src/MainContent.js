@@ -2,11 +2,14 @@ import './MainContent.css'
 import Table from './Table';
 import TableLicense from './TableLicense'
 import React, {useEffect, useState} from "react";
+import CreatePopup from './CreatePopup'
 export default function MainContent() {
 
     const [mode, setMode] = useState('License');
     const [modeButton, setModeButton] = useState('Show Employee');
     const [title, setTitle] = useState('Licenses');
+    const [createPopupOn, setCreatePopupOn] = useState(false);
+    const [addButtonTitle, setAddButtonTitle] = useState('Add new license');
 
     
     const changeMode = () => {
@@ -15,17 +18,26 @@ export default function MainContent() {
             setMode('Employee');
             setModeButton('Show Licenses'); 
             setTitle('Licensing');
+            setAddButtonTitle('Add new licensing');
             
         }else{
             setMode('License');
             
             setModeButton('Show Employee');
             setTitle('Licenses');
+            setAddButtonTitle('Add new license');
             
         }
 
 }
 
+    const closePopup = () => {
+        setCreatePopupOn(false); 
+    };
+
+    const handleClick = () => {
+        setCreatePopupOn(true)
+    }
     return (
 <>
 <body className='MainContent'>
@@ -58,12 +70,14 @@ Total licenses:
 <button type="button" className='Search' >Search</button> {/* onClick={handleSearch} */}
 
 <div>
-<button className='CreateButton'>Add New License</button>
+<button className='CreateButton' onClick={handleClick}>{addButtonTitle}</button>
 </div>
 </body> 
 <Table mode={mode}/>
+
+{createPopupOn && <CreatePopup onClose={closePopup} mode={mode} />}
 </>
     )
 }
 
-//<TableLicense />
+
