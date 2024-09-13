@@ -21,3 +21,5 @@ const TableRow = ({ row, onEdit, mode }) => {
 }
 
 export default TableRow;
+
+
