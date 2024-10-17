@@ -20,17 +20,46 @@ const CreatePopup = ({ onClose, mode }) => {
         onClose();
     };
 
+
+    const handleCreate = async () => {
+        if(mode ==='License'){
+
+            console.log("Fetch start mode license");
+            
+
+        await fetch(`http://localhost:8080/addLicense/${currentRow[0]}/${currentRow[2]}/${currentRow[3]}/${currentRow[4]}/${currentRow[5]}/${currentRow[1]}`, {
+            method: "Post",
+            headers: {
+                'Authorization': 'Basic ' + btoa('Bart:123')
+            }
+        });
+// /addLicensingWithFrontend/{email}/{department}/{company}/{licenseID}
+        }else{
+
+            await fetch(`http://localhost:8080/addLicensingWithFrontend/${currentRow[0]}/${currentRow[1]}/${currentRow[2]}/${currentRow[3]}`, {
+                method: "Post",
+                headers: {
+                    'Authorization': 'Basic ' + btoa('Bart:123')
+                }
+            });
+        }
+
+        onClose();
+        window.location.reload();
+    }
+    
+
     const renderInputs = () => {
         return (
             <>
-                <input className='testInput' value={""} onChange={(e) => handleInputChange(e, 0)} />
-                <input value={""} onChange={(e) => handleInputChange(e, 1)} />
-                <input value={""} onChange={(e) => handleInputChange(e, 2)} />
-                {mode === 'License' && <input value={""} onChange={(e) => handleInputChange(e, 7)} />}
-                <input value={""} onChange={(e) => handleInputChange(e, 3)} />
-                <input value={""} onChange={(e) => handleInputChange(e, 4)} />
-                <input value={""} onChange={(e) => handleInputChange(e, 5)} />
-                <input value={""} onChange={(e) => handleInputChange(e, 6)} />
+                <input className='testInput' defaultValue={""} onChange={(e) => handleInputChange(e, 0)} />
+                <input defaultValue={""}  onChange={(e) => handleInputChange(e, 1)} type={mode === 'License' ? 'Date' : 'text'}  />
+                <input defaultValue={""} onChange={(e) => handleInputChange(e, 2)} type={mode === 'License' ? 'Date' : 'text'} />
+                <input defaultValue={""} onChange={(e) => handleInputChange(e, 3)} />
+                {mode === 'License' && <input defaultValue={""} onChange={(e) => handleInputChange(e, 4)} />}
+                {mode === 'License' && <input defaultValue={""} onChange={(e) => handleInputChange(e, 5)} />}
+                
+               
             </>
         );
     };
@@ -45,9 +74,8 @@ const CreatePopup = ({ onClose, mode }) => {
             <div id='divLicenseDetailsTitle'>
                 {mode === 'License' ? (
                     <>
-                        <p><strong>ID</strong></p>
+                        
                         <p><strong>Amount</strong></p>
-                        <p><strong>Available</strong></p>
                         <p><strong>Start Date</strong></p>
                         <p><strong>Expiration Date</strong></p>
                         <p><strong>PO (new)</strong></p>
@@ -59,10 +87,10 @@ const CreatePopup = ({ onClose, mode }) => {
                         <p><strong>E-Mail</strong></p>
                         <p><strong>Department</strong></p>
                         <p><strong>Company</strong></p>
-                        <p><strong>Subscription Pack</strong></p>
-                        <p><strong>Expiration Date</strong></p>
-                        <p><strong>PO (new)</strong></p>
-                        <p><strong>PO (old)</strong></p>
+                        {/* <p><strong>Subscription Pack</strong></p>
+                        <p><strong>Expiration Date</strong></p> */}
+                        <p><strong>ID (PO (new))</strong></p>
+                        {/* <p><strong>PO (old)</strong></p> */}
                     </>
                 )}
             </div>
@@ -71,7 +99,7 @@ const CreatePopup = ({ onClose, mode }) => {
             </div>
             <div id='PopupButtons'>
                 
-                <p className="DeleteButton" >Create</p>
+                <p className="DeleteButton" onClick={handleCreate}>Create</p>
             </div>
         </div>
     );

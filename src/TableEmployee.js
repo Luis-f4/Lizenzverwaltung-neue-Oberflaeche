@@ -7,9 +7,11 @@ const TableEmployee = () => {
 
     const [data, setData] = useState([]);
     const [selectedRow, setSelectedRow] = useState(null); // Zustand für die ausgewählte Zeile
+    const [selectedIdLicensing, setSelectedIdLicensing] = useState(null);
+    
 
     useEffect(() => {
-        fetch('http://localhost:8080/all', {
+        fetch('http://localhost:8080/allLicensing', {
             method: 'GET',
             headers: {
                 'Authorization': 'Basic ' + btoa('Bart:123')
@@ -20,13 +22,31 @@ const TableEmployee = () => {
         .catch(error => console.error('Error fetching data:', error));
     }, []);
 
-    const handleEditClick = (row) => {
-        setSelectedRow(row); // Zeile speichern und Popup öffnen
+    const handleEditClick = (row, idLicensing) => {
+        console.log("jetzt wird die funktion ausgeführt");
+        console.log("idLIcensing: ", idLicensing);
+
+        setSelectedRow(row); 
+        setSelectedIdLicensing(idLicensing);
+
+       
     };
 
+
+
     const closePopup = () => {
+        console.log("selectedIdLicensing VORHER: ", selectedIdLicensing);
+
         setSelectedRow(null); // Popup schließen
+        setSelectedIdLicensing(null);
+
+   
     };
+
+    // useEffect um den neuen Wert zu überwachen
+    useEffect(() => {
+        console.log("Neuer Wert von selectedIdLicensing: ", selectedIdLicensing);
+    }, [selectedIdLicensing]);
 
     return (
         <>
@@ -51,7 +71,7 @@ const TableEmployee = () => {
                 </tbody>
             </table>
 
-            {selectedRow && <Popup row={selectedRow} onClose={closePopup} mode={"Employee"} />}
+            {selectedRow && <Popup row={selectedRow} onClose={closePopup} mode={"Employee"} licensingID={selectedIdLicensing}/>}
         </>
     );
     

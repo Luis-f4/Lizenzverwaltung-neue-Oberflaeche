@@ -1,6 +1,15 @@
 import EditButton from "./EditButton";
+import {useState } from 'react';
 
-const TableRow = ({ row, onEdit, mode }) => {
+const TableRow = ({ row, onEdit, mode}) => {
+
+    let idLIcensing = null;
+
+    if (mode !== 'License') {
+        idLIcensing = row[7];
+        //console.log("LicensingID: ", idLIcensing + "  email: " + row[0] + "  sub pack: " + row[3]);
+    }
+
     const commonCells = [
         <td key={0}>{row[0]}</td>,
         <td key={1}>{row[1]}</td>,
@@ -10,15 +19,16 @@ const TableRow = ({ row, onEdit, mode }) => {
         <td key={4}>{row[4]}</td>,
         <td key={5}>{row[5]}</td>,
         <td key={6}>{row[6]}</td>
-    ].filter(Boolean); // filter(Boolean) entfernt null-Werte
+    ].filter(Boolean);
 
     return (
         <tr>
             {commonCells}
-            <EditButton onClick={() => onEdit(row)} />
+            <EditButton onClick={() => onEdit(row, idLIcensing)} />
         </tr>
     );
-}
+};
+
 
 export default TableRow;
 

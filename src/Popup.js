@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
 import './Popup.css';
 
-const Popup = ({ row, onClose, mode }) => {
+const Popup = ({ row, onClose, mode, licensingID}) => {
     const [originalRow] = useState(row ? [...row] : []);
     const [currentRow, setCurrentRow] = useState(row ? [...row] : []);
+    console.log("licensingID bwi Popup: ", licensingID);
     if (!row) return null;
 
     const handleInputChange = (e, index) => {
         const newRow = [...currentRow];
         newRow[index] = e.target.value;
+
+        console.log("originalRow: ", originalRow);
+        console.log("currentRow: ", currentRow);
         setCurrentRow(newRow);
     };
 
@@ -37,7 +41,7 @@ const Popup = ({ row, onClose, mode }) => {
 
         } else {
             
-            await fetch(`http://localhost:8080/update/${currentRow[0]}/${currentRow[1]}/${currentRow[2]}`, {
+            await fetch(`http://localhost:8080/updateEmployee/${currentRow[0]}/${currentRow[1]}/${currentRow[2]}/${originalRow[0]}/${originalRow[1]}/${originalRow[2]}`, {
                 method: "PUT",
                 headers: {
                     'Authorization': 'Basic ' + btoa('Bart:123')
@@ -66,7 +70,7 @@ const Popup = ({ row, onClose, mode }) => {
 
         }else{
 
-            await fetch(`http://localhost:8080/delete/${currentRow[0]}`, {
+            await fetch(`http://localhost:8080/deleteLicensing/${licensingID}`, {
                 method: "DELETE",
                 headers: {
                     'Authorization': 'Basic ' + btoa('Bart:123')
@@ -78,18 +82,19 @@ const Popup = ({ row, onClose, mode }) => {
         onClose();
         window.location.reload();
     }
-
+// disabled={mode === 'license}
     const renderInputs = () => {
         return (
             <>
-                <input className='testInput' value={currentRow[0]} onChange={(e) => handleInputChange(e, 0)} />
+                <input className='testInput' value={currentRow[0]} onChange={(e) => handleInputChange(e, 0)} disabled={mode === 'License'}/>
                 <input value={currentRow[1]} onChange={(e) => handleInputChange(e, 1)} />
-                <input value={currentRow[2]} onChange={(e) => handleInputChange(e, 2)} />
+                <input value={currentRow[2]} onChange={(e) => handleInputChange(e, 2)} disabled={mode === 'License'}/>
                 {mode === 'License' && <input value={currentRow[7]} onChange={(e) => handleInputChange(e, 7)} />}
-                <input value={currentRow[3]} onChange={(e) => handleInputChange(e, 3)} />
-                <input value={currentRow[4]} onChange={(e) => handleInputChange(e, 4)} />
-                <input value={currentRow[5]} onChange={(e) => handleInputChange(e, 5)} />
-                <input value={currentRow[6]} onChange={(e) => handleInputChange(e, 6)} />
+                <input value={currentRow[3]} onChange={(e) => handleInputChange(e, 3)} disabled={mode !== 'License'}/>
+                <input value={currentRow[4]} onChange={(e) => handleInputChange(e, 4)} disabled={mode !== 'License'}/>
+                <input value={currentRow[5]} onChange={(e) => handleInputChange(e, 5)} disabled={mode !== 'License'}/>
+                <input value={currentRow[6]} onChange={(e) => handleInputChange(e, 6)} disabled={mode !== 'License'}/>
+                
             </>
         );
     };
