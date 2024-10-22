@@ -1,13 +1,42 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Popup.css';
 
 const CreatePopup = ({ onClose, mode }) => {
     const [currentRow, setCurrentRow] = useState([]);
+    const [dropdownOptions, setDropdownoptions] = useState([]);
+
+    useEffect(() => {
+        const fetchLincenseInformation = async () => {
+            try{
+                const response = await fetch(`http://localhost:8080/testLicenseInformation`, {
+                    headers: {
+                        'Authorization': 'Basic ' + btoa('Bart:123')
+                    }
+                });
+                const data = await response.json();
+                console.log("data: ", data);
+                setDropdownoptions(data);
+            }catch (error){
+                console.error('Error fetching license information: ', error);
+            }
+        };
+
+        fetchLincenseInformation();
+
+        
+    }, []);
 
     const handleInputChange = (e, index) => {
         const newRow = [...currentRow];
         newRow[index] = e.target.value;
         setCurrentRow(newRow);
+
+        // console.log("newRow: " + newRow[3]);
+        // console.log("newRow: " + newRow[3][0]);
+        // console.log("newRow: " + newRow[3][1]);
+        // console.log("newRow: " + newRow[3][2]);
+
+        // console.log("row[0]: ", newRow[0]);
     };
 
     const resetChanges = () => new Promise(resolve => {
@@ -36,7 +65,7 @@ const CreatePopup = ({ onClose, mode }) => {
 // /addLicensingWithFrontend/{email}/{department}/{company}/{licenseID}
         }else{
 
-            await fetch(`http://localhost:8080/addLicensingWithFrontend/${currentRow[0]}/${currentRow[1]}/${currentRow[2]}/${currentRow[3]}`, {
+            await fetch(`http://localhost:8080/addLicensingWithFrontend/${currentRow[0]}/${currentRow[1]}/${currentRow[2]}/${currentRow[3]}`, { //ändern
                 method: "Post",
                 headers: {
                     'Authorization': 'Basic ' + btoa('Bart:123')
@@ -55,10 +84,24 @@ const CreatePopup = ({ onClose, mode }) => {
                 <input className='testInput' defaultValue={""} onChange={(e) => handleInputChange(e, 0)} />
                 <input defaultValue={""}  onChange={(e) => handleInputChange(e, 1)} type={mode === 'License' ? 'Date' : 'text'}  />
                 <input defaultValue={""} onChange={(e) => handleInputChange(e, 2)} type={mode === 'License' ? 'Date' : 'text'} />
-                <input defaultValue={""} onChange={(e) => handleInputChange(e, 3)} />
+                                
+                {mode !== 'License' && (
+                    <select name="cars" id="cars" onChange={(e) => {
+                        const selectedOption = dropdownOptions.find(option => option[0] === e.target.value);
+                        handleInputChange({ target : { value: selectedOption } }, 3)
+                        }} >
+                            <option></option>
+                        {dropdownOptions.map((option, index) => (
+                            <option key={index} value={option[0]}> {option[0]} | PO: {option[1]} | amount: {option[2]} </option>
+                        ))}
+                    </select>
+                )}
+                
+                {mode === 'License' && <input defaultValue={""} onChange={(e) => handleInputChange(e, 3)} />}
+
                 {mode === 'License' && <input defaultValue={""} onChange={(e) => handleInputChange(e, 4)} />}
                 {mode === 'License' && <input defaultValue={""} onChange={(e) => handleInputChange(e, 5)} />}
-                
+
                
             </>
         );

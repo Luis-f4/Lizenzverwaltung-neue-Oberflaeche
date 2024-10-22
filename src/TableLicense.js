@@ -4,11 +4,25 @@ import { useEffect, useState } from 'react';
 import Popup from './Popup';
 
 const TableLicense = () => {
+
+    //console.log("showExpiredLicenses in License: ", showExpiredLicenses);
     const [data, setData] = useState([]);
     const [selectedRow, setSelectedRow] = useState(null); // Zustand für die ausgewählte Zeile
 
+    console.log('localstorage: ', localStorage.getItem('showExpiredLicenses'));
+
+    var url ="";
+
+    if(localStorage.getItem('showExpiredLicenses') === "true"){
+        console.log("getAllLicensesExpiringSoon");
+        url = 'http://localhost:8080/getAllLicensesExpiringSoon';
+    }else{
+        console.log("getAllLicenses");
+        url = 'http://localhost:8080/getAllLicenses';
+    }
+
     useEffect(() => {
-        fetch('http://localhost:8080/getAllLicenses', {
+        fetch(url, {
             method: 'GET',
             headers: {
                 'Authorization': 'Basic ' + btoa('Bart:123')

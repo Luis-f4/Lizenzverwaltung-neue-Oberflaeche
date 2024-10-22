@@ -5,13 +5,25 @@ import Popup from './Popup';
 
 const TableEmployee = () => {
 
+   
     const [data, setData] = useState([]);
     const [selectedRow, setSelectedRow] = useState(null); // Zustand für die ausgewählte Zeile
     const [selectedIdLicensing, setSelectedIdLicensing] = useState(null);
     
 
+    var url = '';
+
+    if(localStorage.getItem('showExpiredLicenses') === "true"){
+        
+        url = 'http://localhost:8080/allLicensingExpiringSoon';
+    }else{
+        
+        url = 'http://localhost:8080/allLicensing';
+    }
+
+
     useEffect(() => {
-        fetch('http://localhost:8080/allLicensing', {
+        fetch(url, {
             method: 'GET',
             headers: {
                 'Authorization': 'Basic ' + btoa('Bart:123')

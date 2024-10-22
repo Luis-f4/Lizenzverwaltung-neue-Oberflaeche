@@ -2,7 +2,9 @@ import TableLicense from "./TableLicense";
 import TableEmployee from "./TableEmployee";
 const Table = ({mode}) => {
 
-    
+
+
+
     if(mode === 'License'){
         return(
             <TableLicense />
