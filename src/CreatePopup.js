@@ -31,12 +31,6 @@ const CreatePopup = ({ onClose, mode }) => {
         newRow[index] = e.target.value;
         setCurrentRow(newRow);
 
-        // console.log("newRow: " + newRow[3]);
-        // console.log("newRow: " + newRow[3][0]);
-        // console.log("newRow: " + newRow[3][1]);
-        // console.log("newRow: " + newRow[3][2]);
-
-        // console.log("row[0]: ", newRow[0]);
     };
 
     const resetChanges = () => new Promise(resolve => {
@@ -65,13 +59,18 @@ const CreatePopup = ({ onClose, mode }) => {
 // /addLicensingWithFrontend/{email}/{department}/{company}/{licenseID}
         }else{
 
-            await fetch(`http://localhost:8080/addLicensingWithFrontend/${currentRow[0]}/${currentRow[1]}/${currentRow[2]}/${currentRow[3]}`, { //ändern
+            await fetch(`http://localhost:8080/addLicensingWithFrontendNew/${currentRow[0]}/${currentRow[1]}/${currentRow[2]}/${currentRow[3][0]}/${currentRow[3][1]}/${currentRow[3][2]}`, { //ändern
                 method: "Post",
                 headers: {
                     'Authorization': 'Basic ' + btoa('Bart:123')
                 }
             });
         }
+
+        console.log("current ror: ", currentRow[3]);
+        console.log("current ror: ", currentRow[3][0]);
+        console.log("current ror: ", currentRow[3][1]);
+        console.log("current ror: ", currentRow[3][2]);
 
         onClose();
         window.location.reload();
@@ -86,7 +85,7 @@ const CreatePopup = ({ onClose, mode }) => {
                 <input defaultValue={""} onChange={(e) => handleInputChange(e, 2)} type={mode === 'License' ? 'Date' : 'text'} />
                                 
                 {mode !== 'License' && (
-                    <select name="cars" id="cars" onChange={(e) => {
+                    <select name="LicenseOptions" id="LicenseOptions" onChange={(e) => {
                         const selectedOption = dropdownOptions.find(option => option[0] === e.target.value);
                         handleInputChange({ target : { value: selectedOption } }, 3)
                         }} >

@@ -1,20 +1,53 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Popup.css';
 
 const Popup = ({ row, onClose, mode, licensingID}) => {
     const [originalRow] = useState(row ? [...row] : []);
     const [currentRow, setCurrentRow] = useState(row ? [...row] : []);
+    const [dropdownOptions, setDropdownoptions] = useState([]);
     console.log("licensingID bwi Popup: ", licensingID);
+   
+
+
+    
+    
+
+    useEffect(() => {
+        const fetchLincenseInformation = async () => {
+            try{
+                const response = await fetch(`http://localhost:8080/testLicenseInformation`, {
+                    headers: {
+                        'Authorization': 'Basic ' + btoa('Bart:123')
+                    }
+                });
+                const data = await response.json();
+                console.log("data: ", data);
+                setDropdownoptions(data);
+            }catch (error){
+                console.error('Error fetching license information: ', error);
+            }
+        };
+
+        fetchLincenseInformation();
+
+        
+    }, []);
+
     if (!row) return null;
 
     const handleInputChange = (e, index) => {
         const newRow = [...currentRow];
         newRow[index] = e.target.value;
-
-        console.log("originalRow: ", originalRow);
-        console.log("currentRow: ", currentRow);
         setCurrentRow(newRow);
+
+
+        console.log("Popup bearbeiten: ", currentRow[3]);
+        console.log("Popup bearbeiten: ", currentRow[3][0]);
+        console.log("Popup bearbeiten: ", currentRow[3][1]);
+        console.log("Popup bearbeiten: ", currentRow[3][2]);
     };
+
+
 
     const resetChanges = () => new Promise(resolve => {
         setCurrentRow([...originalRow]);
@@ -39,7 +72,7 @@ const Popup = ({ row, onClose, mode, licensingID}) => {
         
 
 
-        } else {
+        } else { // änderung der Lizenzvergabe ändern!!!!!!!!!!!!!
             
             await fetch(`http://localhost:8080/updateEmployee/${currentRow[0]}/${currentRow[1]}/${currentRow[2]}/${originalRow[0]}/${originalRow[1]}/${originalRow[2]}`, {
                 method: "PUT",
@@ -53,6 +86,9 @@ const Popup = ({ row, onClose, mode, licensingID}) => {
         onClose();
         window.location.reload();
     };
+
+
+
 
     const handleDelete = async () => {
 
@@ -84,13 +120,36 @@ const Popup = ({ row, onClose, mode, licensingID}) => {
     }
 // disabled={mode === 'license}
     const renderInputs = () => {
+        console.log("Current row bei render: ", currentRow);
+        console.log("originalRowbei render: ", originalRow);
+        console.log("dropdownOptions render: ", dropdownOptions);
+
+        // PO: {originalRow[5]} |
         return (
             <>
+               
                 <input className='testInput' value={currentRow[0]} onChange={(e) => handleInputChange(e, 0)} disabled={mode === 'License'}/>
                 <input value={currentRow[1]} onChange={(e) => handleInputChange(e, 1)} />
                 <input value={currentRow[2]} onChange={(e) => handleInputChange(e, 2)} disabled={mode === 'License'}/>
                 {mode === 'License' && <input value={currentRow[7]} onChange={(e) => handleInputChange(e, 7)} />}
-                <input value={currentRow[3]} onChange={(e) => handleInputChange(e, 3)} disabled={mode !== 'License'}/>
+           
+
+                {mode !== 'License' && (
+                    <select name="LicenseOptions" id="LicenseOptions" onChange={(e) => {
+                        const selectedOption = dropdownOptions.find(option => option[0] === e.target.value);
+                        handleInputChange({ target : { value: selectedOption } }, 3)
+                        }} >
+                            <option>{originalRow[3]} | amount: 22</option> 
+                        {dropdownOptions.map((option, index) => (
+                            <option key={index} value={option[0]}> {option[0]} | PO: {option[1]} | amount: {option[2]} </option>
+                        ))}
+                    </select>
+                )}
+                
+                {mode === 'License' && <input value={currentRow[3]} onChange={(e) => handleInputChange(e, 3)} disabled={mode !== 'License'}/>}
+
+                
+                
                 <input value={currentRow[4]} onChange={(e) => handleInputChange(e, 4)} disabled={mode !== 'License'}/>
                 <input value={currentRow[5]} onChange={(e) => handleInputChange(e, 5)} disabled={mode !== 'License'}/>
                 <input value={currentRow[6]} onChange={(e) => handleInputChange(e, 6)} disabled={mode !== 'License'}/>
@@ -123,7 +182,7 @@ const Popup = ({ row, onClose, mode, licensingID}) => {
                         <p><strong>E-Mail</strong></p>
                         <p><strong>Department</strong></p>
                         <p><strong>Company</strong></p>
-                        <p><strong>Subscription Pack</strong></p>
+                        <p id='ueberschriftSubscriptionPack'><strong>Subscription Pack</strong></p>
                         <p><strong>Expiration Date</strong></p>
                         <p><strong>PO (new)</strong></p>
                         <p><strong>PO (old)</strong></p>

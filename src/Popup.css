@@ -49,7 +49,7 @@ h2{
 
 #divLicenseDetailsTitle{
     display: flex;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     height: 10%;
     /* background-color: blueviolet;  */
     align-items: center;
@@ -114,3 +114,12 @@ h2{
     transition-duration: 80ms  
 }
 
+#LicenseOptions{
+    width: 45%;
+}
+
+
+#ueberschriftSubscriptionPack {
+    padding-left: 6% !important; 
+    padding-right: 6% !important; 
+}

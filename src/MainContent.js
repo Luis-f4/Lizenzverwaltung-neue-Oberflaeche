@@ -13,6 +13,7 @@ export default function MainContent() {
     const [createPopupOn, setCreatePopupOn] = useState(false);
     const [addButtonTitle, setAddButtonTitle] = useState('Add new license');
     const [showExpiredLicenses, setShowExpiredLicenses] = useState(false);
+    const[ licenseStatistic, setLicenseStatistic] = useState([]);
 
     // Beim Laden der Komponente den Zustand aus dem localStorage wiederherstellen
     useEffect(() => {
@@ -32,6 +33,25 @@ export default function MainContent() {
                 setAddButtonTitle('Add new licensing');
             }
         }
+    }, []);
+
+    useEffect(() => {
+        const fetchLincenseInformation = async () => {
+            try{
+                const response = await fetch(`http://localhost:8080/getLicenseStatistic`, {
+                    headers: {
+                        'Authorization': 'Basic ' + btoa('Bart:123')
+                    }
+                });
+                const data = await response.json();
+                console.log("data lololol: ", data);
+                setLicenseStatistic(data);
+            }catch (error){
+                console.error('Error fetching license information: ', error);
+            }
+        };
+ 
+        fetchLincenseInformation();
     }, []);
 
     const changeMode = () => {
