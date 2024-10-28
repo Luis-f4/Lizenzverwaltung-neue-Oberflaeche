@@ -92,7 +92,7 @@ export default function MainContent() {
         <>
             <body className='MainContent'>
                 <div className="LizenzenStat">
-                    Available licenses:
+                    Available licenses: 
                     <br />
                     Allocated licenses:
                     <br />

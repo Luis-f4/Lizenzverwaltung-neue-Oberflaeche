@@ -23,7 +23,7 @@ const TableRow = ({ row, onEdit, mode}) => {
 
     
    
-    if (today > expirationDate) {
+    if (today >= expirationDate) {
         
         backgroundColorClass = "expired";
     } else if (difference < 3) {

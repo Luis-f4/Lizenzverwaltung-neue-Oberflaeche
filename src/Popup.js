@@ -41,10 +41,10 @@ const Popup = ({ row, onClose, mode, licensingID}) => {
         setCurrentRow(newRow);
 
 
-        console.log("Popup bearbeiten: ", currentRow[3]);
-        console.log("Popup bearbeiten: ", currentRow[3][0]);
-        console.log("Popup bearbeiten: ", currentRow[3][1]);
-        console.log("Popup bearbeiten: ", currentRow[3][2]);
+        // console.log("Popup bearbeiten: ", currentRow[3]);
+        // console.log("Popup bearbeiten: ", currentRow[3][0]);
+        // console.log("Popup bearbeiten: ", currentRow[3][1]);
+        // console.log("Popup bearbeiten: ", currentRow[3][2]);
     };
 
 
@@ -73,8 +73,10 @@ const Popup = ({ row, onClose, mode, licensingID}) => {
 
 
         } else { // änderung der Lizenzvergabe ändern!!!!!!!!!!!!!
-            
-            await fetch(`http://localhost:8080/updateEmployee/${currentRow[0]}/${currentRow[1]}/${currentRow[2]}/${originalRow[0]}/${originalRow[1]}/${originalRow[2]}`, {
+           // http://localhost:8080/updateEmployee/5/test3U@gmail.com/IT/Vodafone/UpdateTest/444/220
+           console.log("folgendes funktioniert: http://localhost:8080/updateEmployee/5/test3U@gmail.com/IT/Vodafone/UpdateTest/444/220")
+           console.log("Fetch:  "+`${licensingID}/${currentRow[0]}/${currentRow[1]}/${currentRow[2]}/${currentRow[3][0]}/${currentRow[3][1]}/${currentRow[3][2]}`);
+            await fetch(`http://localhost:8080/updateEmployee/${licensingID}/${currentRow[0]}/${currentRow[1]}/${currentRow[2]}/${currentRow[3][0]}/${currentRow[3][1]}/${currentRow[3][2]}`, {
                 method: "PUT",
                 headers: {
                     'Authorization': 'Basic ' + btoa('Bart:123')
@@ -120,9 +122,9 @@ const Popup = ({ row, onClose, mode, licensingID}) => {
     }
 // disabled={mode === 'license}
     const renderInputs = () => {
-        console.log("Current row bei render: ", currentRow);
-        console.log("originalRowbei render: ", originalRow);
-        console.log("dropdownOptions render: ", dropdownOptions);
+        // console.log("Current row bei render: ", currentRow);
+        // console.log("originalRowbei render: ", originalRow);
+        // console.log("dropdownOptions render: ", dropdownOptions);
 
         // PO: {originalRow[5]} |
         return (
