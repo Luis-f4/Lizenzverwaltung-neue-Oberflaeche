@@ -126,14 +126,12 @@ const CreatePopup = ({ onClose, mode }) => {
                     </>
                 ) : (
                     <>
-                        <p><strong>E-Mail</strong></p>
-                        <p><strong>Department</strong></p>
-                        <p><strong>Company</strong></p>
-                        {/* <p><strong>Subscription Pack</strong></p>
-                        <p><strong>Expiration Date</strong></p> */}
-                        <p><strong>ID (PO (new))</strong></p>
-                        {/* <p><strong>PO (old)</strong></p> */}
-                    </>
+                        <p className='PopupTitle-Licensing' id='PopupTitle-Licensing-E-Mail'><strong>E-Mail</strong></p>
+                        <p className='PopupTitle-Licensing' id='PopupTitle-Licensing-Department'><strong>Department</strong></p>
+                        <p className='PopupTitle-Licensing' id='PopupTitle-Licensing-Company'><strong>Company</strong></p>
+
+                        <p className='PopupTitle-Licensing' id='PopupTitle-Licensing-License'><strong>License</strong></p>
+                    </> 
                 )}
             </div>
             <div id='divLicenseDetails'>

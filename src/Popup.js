@@ -72,8 +72,8 @@ const Popup = ({ row, onClose, mode, licensingID}) => {
         
 
 
-        } else { // änderung der Lizenzvergabe ändern!!!!!!!!!!!!!
-           // http://localhost:8080/updateEmployee/5/test3U@gmail.com/IT/Vodafone/UpdateTest/444/220
+        } else { 
+          
            console.log("folgendes funktioniert: http://localhost:8080/updateEmployee/5/test3U@gmail.com/IT/Vodafone/UpdateTest/444/220")
            console.log("Fetch:  "+`${licensingID}/${currentRow[0]}/${currentRow[1]}/${currentRow[2]}/${currentRow[3][0]}/${currentRow[3][1]}/${currentRow[3][2]}`);
             await fetch(`http://localhost:8080/updateEmployee/${licensingID}/${currentRow[0]}/${currentRow[1]}/${currentRow[2]}/${currentRow[3][0]}/${currentRow[3][1]}/${currentRow[3][2]}`, {
@@ -141,7 +141,7 @@ const Popup = ({ row, onClose, mode, licensingID}) => {
                         const selectedOption = dropdownOptions.find(option => option[0] === e.target.value);
                         handleInputChange({ target : { value: selectedOption } }, 3)
                         }} >
-                            <option>{originalRow[3]} | amount: 22</option> 
+                            <option>{originalRow[3]} | amount: 22</option>  
                         {dropdownOptions.map((option, index) => (
                             <option key={index} value={option[0]}> {option[0]} | PO: {option[1]} | amount: {option[2]} </option>
                         ))}

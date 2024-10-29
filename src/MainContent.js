@@ -44,7 +44,7 @@ export default function MainContent() {
                     }
                 });
                 const data = await response.json();
-                console.log("data lololol: ", data);
+                
                 setLicenseStatistic(data);
             }catch (error){
                 console.error('Error fetching license information: ', error);
@@ -92,7 +92,7 @@ export default function MainContent() {
         <>
             <body className='MainContent'>
                 <div className="LizenzenStat">
-                    Available licenses: 
+                    Available licenses:
                     <br />
                     Allocated licenses:
                     <br />
@@ -109,7 +109,7 @@ export default function MainContent() {
 
                 <button type="button" className='Search'>Search</button>
 
-                <label htmlFor="checkExpiredLicenses">Abgelaufene Lizenzen anzeigen</label>
+                <label htmlFor="checkExpiredLicenses">Expiring licences</label>
                 <input type="checkbox" id='checkExpiredLicenses' checked={showExpiredLicenses} onChange={handleCheckboxChange} />
 
                 <div>
